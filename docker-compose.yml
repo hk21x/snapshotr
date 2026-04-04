@@ -1,0 +1,31 @@
+services:
+  snapshotr:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - snapshotr-data:/data/images
+      - ./config.json:/app/config.json
+    environment:
+      - NODE_ENV=production
+      - CONFIG_DIR=/app
+      - IMAGE_DIR=/data/images
+      # - RTSP_URL=rtsps://192.168.1.1:7441/your-stream-id
+      # - INTERVAL_MINUTES=5
+      # - JPEG_QUALITY=2
+      # - IMAGE_DIR=/data/images
+      # - DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
+      # - API_KEY=your-secret-key
+      # - RETENTION_ENABLED=true
+      # - RETENTION_MAX_AGE_DAYS=30
+      # - RETENTION_MAX_TOTAL_MB=0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r => { if (!r.ok) process.exit(1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  snapshotr-data:

@@ -1,0 +1,9 @@
+{
+  "name": "Snapshotr",
+  "short_name": "Snapshotr",
+  "description": "Camera snapshot management for UniFi Protect",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f"
+}
