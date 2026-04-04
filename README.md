@@ -18,9 +18,9 @@
     Capture high-quality JPEG snapshots from RTSPS streams on a schedule, create timelines from them and get notified when things go wrong.
     <br />
     <br />
-    <a href="https://github.com/hk21/snapshotr/issues/new?labels=bug">Report Bug</a>
+    <a href="https://github.com/hk21x/snapshotr/issues/new?labels=bug">Report Bug</a>
     &middot;
-    <a href="https://github.com/hk21/snapshotr/issues/new?labels=enhancement">Request Feature</a>
+    <a href="https://github.com/hk21x/snapshotr/issues/new?labels=enhancement">Request Feature</a>
   </p>
 </div>
 
@@ -116,7 +116,7 @@ Snapshotr captures JPEG snapshots from RTSPS camera streams at configurable inte
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/hk21/snapshotr.git
+   git clone https://github.com/hk21x/snapshotr.git
    cd snapshotr
    ```
 2. Start the container
@@ -162,7 +162,7 @@ volumes:
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/hk21/snapshotr.git
+   git clone https://github.com/hk21x/snapshotr.git
    cd snapshotr
    ```
 2. Install dependencies
@@ -382,7 +382,7 @@ src/
 - [x] Light / dark theme
 - [x] Mobile responsive sidebar
 
-See the [open issues](https://github.com/hk21/snapshotr/issues) for a full list of proposed features and known issues.
+See the [open issues](https://github.com/hk21x/snapshotr/issues) for a full list of proposed features and known issues.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -415,7 +415,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Project Link: [https://github.com/hk21/snapshotr](https://github.com/hk21/snapshotr)
+Project Link: [https://github.com/hk21x/snapshotr](https://github.com/hk21x/snapshotr)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -436,16 +436,16 @@ Project Link: [https://github.com/hk21/snapshotr](https://github.com/hk21/snapsh
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/hk21/snapshotr.svg?style=for-the-badge
-[contributors-url]: https://github.com/hk21/snapshotr/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/hk21/snapshotr.svg?style=for-the-badge
-[forks-url]: https://github.com/hk21/snapshotr/network/members
-[stars-shield]: https://img.shields.io/github/stars/hk21/snapshotr.svg?style=for-the-badge
-[stars-url]: https://github.com/hk21/snapshotr/stargazers
-[issues-shield]: https://img.shields.io/github/issues/hk21/snapshotr.svg?style=for-the-badge
-[issues-url]: https://github.com/hk21/snapshotr/issues
-[license-shield]: https://img.shields.io/github/license/hk21/snapshotr.svg?style=for-the-badge
-[license-url]: https://github.com/hk21/snapshotr/blob/main/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/hk21x/snapshotr.svg?style=for-the-badge
+[contributors-url]: https://github.com/hk21x/snapshotr/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/hk21x/snapshotr.svg?style=for-the-badge
+[forks-url]: https://github.com/hk21x/snapshotr/network/members
+[stars-shield]: https://img.shields.io/github/stars/hk21x/snapshotr.svg?style=for-the-badge
+[stars-url]: https://github.com/hk21x/snapshotr/stargazers
+[issues-shield]: https://img.shields.io/github/issues/hk21x/snapshotr.svg?style=for-the-badge
+[issues-url]: https://github.com/hk21x/snapshotr/issues
+[license-shield]: https://img.shields.io/github/license/hk21x/snapshotr.svg?style=for-the-badge
+[license-url]: https://github.com/hk21x/snapshotr/blob/main/LICENSE
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
