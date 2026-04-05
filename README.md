@@ -17,6 +17,7 @@
     <br />
     Capture high-quality JPEG snapshots from RTSPS streams on a schedule, create timelines from them and get notified when things go wrong.
     <br />
+    (https://files.catbox.moe/tc76eq.png)
     <br />
     <a href="https://github.com/hk21x/snapshotr/issues/new?labels=bug">Report Bug</a>
     &middot;
