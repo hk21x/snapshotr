@@ -70,7 +70,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Snapshotr captures JPEG snapshots from RTSPS camera streams at configurable intervals using ffmpeg. It provides a modern web dashboard with a sidebar layout, paginated gallery with lightbox, live logs, and full configuration management - all deployable with a single `docker compose up`.
+Snapshotr captures JPEG snapshots from RTSPS camera streams at configurable intervals using ffmpeg. The purpose behind this application was to allow creation of timelapses from standard IP cameras without mass storage requirements or swapping out an SD card every few days. Instead, you can utilise cameras you already have.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
