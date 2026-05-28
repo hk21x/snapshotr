@@ -115,23 +115,23 @@ Snapshotr captures JPEG snapshots from RTSPS camera streams at configurable inte
 
 ### Docker (Recommended)
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/hk21x/snapshotr.git
-   cd snapshotr
-   ```
+Pre-built multi-arch images (amd64 + arm64) are published to the GitHub Container Registry, so there's no need to build anything yourself.
+
+1. Create a `docker-compose.yml` (see the example below), or download the one from this repo.
 2. Start the container
    ```sh
    docker compose up -d
    ```
 3. Open http://localhost:3000
 
+To pull updates later, run `docker compose pull && docker compose up -d`.
+
 #### Docker Compose Example
 
 ```yaml
 services:
   snapshotr:
-    build: .
+    image: ghcr.io/hk21x/snapshotr:latest
     ports:
       - "3000:3000"
     volumes:

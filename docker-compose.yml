@@ -1,6 +1,9 @@
 services:
   snapshotr:
-    build: .
+    image: ghcr.io/hk21x/snapshotr:latest
+    # To build locally instead of pulling the published image, comment out the
+    # `image:` line above and uncomment the line below:
+    # build: .
     ports:
       - "3001:3001"
     volumes:
