@@ -17,6 +17,7 @@
     <br />
     Capture high-quality JPEG snapshots from RTSPS streams on a schedule, create timelines from them and get notified when things go wrong.
     <br />
+    <img width="2940" height="2057" alt="image" src="https://github.com/user-attachments/assets/62ff456f-c098-448e-af35-90a2cda6da34" />
     <br />
     <a href="https://github.com/hk21x/snapshotr/issues/new?labels=bug">Report Bug</a>
     &middot;
@@ -70,7 +71,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Snapshotr captures JPEG snapshots from RTSPS camera streams at configurable intervals using ffmpeg. It provides a modern web dashboard with a sidebar layout, paginated gallery with lightbox, live logs, and full configuration management - all deployable with a single `docker compose up`.
+Snapshotr captures JPEG snapshots from RTSPS camera streams at configurable intervals using ffmpeg. The purpose behind this application was to allow creation of timelapses from standard IP cameras without mass storage requirements or swapping out an SD card every few days. Instead, you can utilise cameras you already have.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
