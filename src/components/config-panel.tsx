@@ -282,6 +282,75 @@ export function ConfigPanel({ isRunning, onCamerasChange }: ConfigPanelProps) {
                 />
               </div>
             </div>
+
+            {/* Per-camera schedule */}
+            <div className="border-t pt-2 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-medium">Schedule</span>
+                <Switch
+                  checked={cam.schedule.enabled}
+                  onCheckedChange={(checked) => {
+                    const cameras = [...(config.cameras ?? [])];
+                    cameras[idx] = { ...cam, schedule: { ...cam.schedule, enabled: checked } };
+                    setConfig({ ...config, cameras });
+                  }}
+                />
+              </div>
+              {cam.schedule.enabled && (
+                <div className="space-y-2">
+                  <div className="flex flex-wrap gap-1">
+                    {DAY_LABELS.map((label, i) => (
+                      <button
+                        key={label}
+                        onClick={() => {
+                          const cameras = [...(config.cameras ?? [])];
+                          const days = cam.schedule.days.includes(i)
+                            ? cam.schedule.days.filter((d) => d !== i)
+                            : [...cam.schedule.days, i].sort((a, b) => a - b);
+                          cameras[idx] = { ...cam, schedule: { ...cam.schedule, days } };
+                          setConfig({ ...config, cameras });
+                        }}
+                        className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                          cam.schedule.days.includes(i)
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <Label className="text-[10px] text-muted-foreground">Start</Label>
+                      <Input
+                        type="time"
+                        value={cam.schedule.startTime}
+                        onChange={(e) => {
+                          const cameras = [...(config.cameras ?? [])];
+                          cameras[idx] = { ...cam, schedule: { ...cam.schedule, startTime: e.target.value } };
+                          setConfig({ ...config, cameras });
+                        }}
+                        className="h-7 text-xs mt-0.5"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[10px] text-muted-foreground">End</Label>
+                      <Input
+                        type="time"
+                        value={cam.schedule.endTime}
+                        onChange={(e) => {
+                          const cameras = [...(config.cameras ?? [])];
+                          cameras[idx] = { ...cam, schedule: { ...cam.schedule, endTime: e.target.value } };
+                          setConfig({ ...config, cameras });
+                        }}
+                        className="h-7 text-xs mt-0.5"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>

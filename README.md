@@ -136,10 +136,13 @@ services:
     volumes:
       - snapshotr-data:/data/images
       - ./config.json:/app/config.json
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     environment:
       - NODE_ENV=production
       - CONFIG_DIR=/app
       - IMAGE_DIR=/data/images
+      - TZ=Europe/London
       - RTSP_URL=rtsps://192.168.1.1:7441/your-stream-id
       - API_KEY=your-secret-key
     restart: unless-stopped
@@ -226,6 +229,7 @@ All settings are managed from the web UI and saved to `config.json`. Environment
 | `JPEG_QUALITY` | ffmpeg `-q:v` value (1 = best, 31 = smallest) | `2` |
 | `IMAGE_DIR` | Absolute path for saved snapshots | `./images` |
 | `CONFIG_DIR` | Directory containing `config.json` | Working directory |
+| `TZ` | Timezone for snapshot timestamps (e.g. `Europe/London`) | Host local time |
 | `API_KEY` | API key for authentication (unset = auth disabled) | - |
 | `DISCORD_ENABLED` | Enable Discord alerts | `false` |
 | `DISCORD_WEBHOOK_URL` | Discord webhook URL | - |

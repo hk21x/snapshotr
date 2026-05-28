@@ -2,14 +2,20 @@ services:
   snapshotr:
     build: .
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - snapshotr-data:/data/images
       - ./config.json:/app/config.json
+      # Inherit the host's timezone so snapshot timestamps use local time
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     environment:
       - NODE_ENV=production
       - CONFIG_DIR=/app
       - IMAGE_DIR=/data/images
+      # Timezone for snapshot timestamps (e.g. Europe/London). Defaults to the
+      # host's zone via the mounts above; set TZ to override explicitly.
+      - TZ=${TZ:-UTC}
       # - RTSP_URL=rtsps://192.168.1.1:7441/your-stream-id
       # - INTERVAL_MINUTES=5
       # - JPEG_QUALITY=2
@@ -21,7 +27,7 @@ services:
       # - RETENTION_MAX_TOTAL_MB=0
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r => { if (!r.ok) process.exit(1) })"]
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3001/api/health').then(r => { if (!r.ok) process.exit(1) })"]
       interval: 30s
       timeout: 10s
       retries: 3
