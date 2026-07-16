@@ -154,7 +154,7 @@ export function ConfigPanel({ isRunning, onCamerasChange }: ConfigPanelProps) {
             </div>
             <div>
               <Label className="text-xs text-muted-foreground">
-                Quality: {config.jpegQuality}
+                Quality: {config.jpegQuality} (1 = best, 31 = smallest)
               </Label>
               <Slider
                 value={[config.jpegQuality]}
@@ -162,6 +162,7 @@ export function ConfigPanel({ isRunning, onCamerasChange }: ConfigPanelProps) {
                 min={1}
                 max={31}
                 step={1}
+                inverted
                 className="mt-2"
               />
             </div>
@@ -267,7 +268,7 @@ export function ConfigPanel({ isRunning, onCamerasChange }: ConfigPanelProps) {
                 />
               </div>
               <div>
-                <Label className="text-[10px] text-muted-foreground">Quality: {cam.jpegQuality}</Label>
+                <Label className="text-[10px] text-muted-foreground">Quality: {cam.jpegQuality} (1 = best)</Label>
                 <Slider
                   value={[cam.jpegQuality]}
                   onValueChange={([v]) => {
@@ -278,6 +279,7 @@ export function ConfigPanel({ isRunning, onCamerasChange }: ConfigPanelProps) {
                   min={1}
                   max={31}
                   step={1}
+                  inverted
                   className="mt-1"
                 />
               </div>

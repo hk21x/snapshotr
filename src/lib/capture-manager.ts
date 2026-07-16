@@ -125,12 +125,15 @@ class CaptureManager {
 
     return new Promise((resolve) => {
       const args = [
-        "-y", "-rtsp_transport", "tcp",
+        "-y", "-loglevel", "error",
+        "-rtsp_transport", "tcp",
+        // Only decode keyframes: joining an H.264 stream mid-GOP otherwise
+        // yields a gray error-concealment frame as the first decoded frame.
+        "-skip_frame", "nokey",
         "-i", rtspUrl,
         "-frames:v", "1",
         "-q:v", String(jpegQuality),
         filepath,
-        "-loglevel", "error",
       ];
 
       const proc = execFile(
