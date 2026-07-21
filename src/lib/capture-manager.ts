@@ -3,7 +3,7 @@ import { existsSync, statSync, statfsSync, unlinkSync, mkdirSync } from "fs";
 import path from "path";
 import { CaptureConfig, CaptureStatus, CameraConfig, MultiCameraStatus } from "./types";
 import { logStore } from "./log-store";
-import { getConfig } from "./config";
+import { getConfig, saveRunningState } from "./config";
 import { sendAlerts } from "./notifications";
 import { cleanupSnapshots } from "./retention";
 
@@ -87,9 +87,24 @@ class CaptureManager {
   private legacy: CameraInstance = newCameraInstance();
 
   constructor() {
-    const cleanup = () => this.stopAll();
+    // On process shutdown, stop timers but keep the persisted running state
+    // so captures auto-resume when the container comes back up.
+    const cleanup = () => this.stopAll(false);
     process.on("SIGTERM", cleanup);
     process.on("SIGINT", cleanup);
+  }
+
+  getRunningIds(): string[] {
+    const ids: string[] = [];
+    if (this.legacy.running) ids.push("default");
+    for (const [id, inst] of this.instances) {
+      if (inst.running) ids.push(id);
+    }
+    return ids;
+  }
+
+  private persistRunningState() {
+    saveRunningState(this.getRunningIds());
   }
 
   private getInstance(cameraId?: string): CameraInstance {
@@ -296,6 +311,7 @@ class CaptureManager {
     }, intervalMs);
 
     this.legacy.nextCapture = new Date(Date.now() + intervalMs).toISOString();
+    this.persistRunningState();
     return { success: true, message: "Capture started" };
   }
 
@@ -331,6 +347,7 @@ class CaptureManager {
     }, intervalMs);
 
     inst.nextCapture = new Date(Date.now() + intervalMs).toISOString();
+    this.persistRunningState();
     return { success: true, message: `${cam.name} capture started` };
   }
 
@@ -355,9 +372,9 @@ class CaptureManager {
     return { started, failed };
   }
 
-  stop(cameraId?: string): { success: boolean; message: string } {
+  stop(cameraId?: string, persist = true): { success: boolean; message: string } {
     if (cameraId) {
-      return this.stopCamera(cameraId);
+      return this.stopCamera(cameraId, persist);
     }
 
     // Legacy stop
@@ -377,11 +394,12 @@ class CaptureManager {
     this.legacy.running = false;
     this.legacy.capturing = false;
     this.legacy.nextCapture = null;
+    if (persist) this.persistRunningState();
     logStore.add("info", "Capture stopped");
     return { success: true, message: "Capture stopped" };
   }
 
-  private stopCamera(cameraId: string): { success: boolean; message: string } {
+  private stopCamera(cameraId: string, persist = true): { success: boolean; message: string } {
     const inst = this.instances.get(cameraId);
     if (!inst || !inst.running) {
       return { success: false, message: `Camera ${cameraId} not running` };
@@ -399,14 +417,15 @@ class CaptureManager {
     inst.running = false;
     inst.capturing = false;
     inst.nextCapture = null;
+    if (persist) this.persistRunningState();
     logStore.add("info", `[${cameraId}] Capture stopped`);
     return { success: true, message: `Camera ${cameraId} stopped` };
   }
 
-  stopAll(): void {
-    this.stop();
+  stopAll(persist = true): void {
+    this.stop(undefined, persist);
     for (const id of this.instances.keys()) {
-      this.stopCamera(id);
+      this.stopCamera(id, persist);
     }
   }
 

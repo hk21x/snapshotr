@@ -124,3 +124,21 @@ export function getConfig(): CaptureConfig {
 export function saveConfig(config: CaptureConfig): void {
   writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
 }
+
+// Persist which captures are running so they auto-resume after a restart.
+// Edits the raw file rather than round-tripping getConfig() so env-var
+// overrides never get baked into config.json.
+export function saveRunningState(ids: string[]): void {
+  let fileConfig: Record<string, unknown> = {};
+  if (existsSync(CONFIG_PATH)) {
+    try {
+      fileConfig = JSON.parse(readFileSync(CONFIG_PATH, "utf-8"));
+    } catch {
+      // Malformed file: don't clobber it just to record running state
+      return;
+    }
+  }
+  if (ids.length > 0) fileConfig.captureRunning = ids;
+  else delete fileConfig.captureRunning;
+  writeFileSync(CONFIG_PATH, JSON.stringify(fileConfig, null, 2));
+}

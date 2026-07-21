@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { writeFileSync, unlinkSync, existsSync, mkdirSync } from "fs";
+import { writeFileSync, readFileSync, unlinkSync, existsSync, mkdirSync } from "fs";
 import path from "path";
 import os from "os";
 
@@ -87,5 +87,56 @@ describe("config", () => {
     const config = getConfig();
     expect(config.discord.enabled).toBe(true);
     expect(config.discord.webhookUrl).toBe(""); // default preserved
+  });
+
+  describe("saveRunningState", () => {
+    it("writes captureRunning and preserves other fields", async () => {
+      writeFileSync(
+        configPath,
+        JSON.stringify({ rtspUrl: "rtsps://test:7441/cam", intervalMinutes: 10 })
+      );
+      const { saveRunningState, getConfig } = await import("../config");
+      saveRunningState(["default", "cam-123"]);
+      const config = getConfig();
+      expect(config.captureRunning).toEqual(["default", "cam-123"]);
+      expect(config.rtspUrl).toBe("rtsps://test:7441/cam");
+      expect(config.intervalMinutes).toBe(10);
+    });
+
+    it("removes captureRunning when no captures are running", async () => {
+      writeFileSync(
+        configPath,
+        JSON.stringify({ intervalMinutes: 10, captureRunning: ["default"] })
+      );
+      const { saveRunningState, getConfig } = await import("../config");
+      saveRunningState([]);
+      const config = getConfig();
+      expect(config.captureRunning).toBeUndefined();
+      expect(config.intervalMinutes).toBe(10);
+    });
+
+    it("does not bake env overrides into the file", async () => {
+      writeFileSync(configPath, JSON.stringify({ intervalMinutes: 10 }));
+      vi.stubEnv("INTERVAL_MINUTES", "42");
+      const { saveRunningState } = await import("../config");
+      saveRunningState(["default"]);
+      const raw = JSON.parse(readFileSync(configPath, "utf-8"));
+      expect(raw.intervalMinutes).toBe(10); // file untouched by env override
+      expect(raw.captureRunning).toEqual(["default"]);
+    });
+
+    it("does not clobber a malformed config file", async () => {
+      writeFileSync(configPath, "not valid json {{{");
+      const { saveRunningState } = await import("../config");
+      saveRunningState(["default"]);
+      const raw = readFileSync(configPath, "utf-8");
+      expect(raw).toBe("not valid json {{{"); // left for the user to fix
+    });
+
+    it("creates the file when none exists", async () => {
+      const { saveRunningState, getConfig } = await import("../config");
+      saveRunningState(["default"]);
+      expect(getConfig().captureRunning).toEqual(["default"]);
+    });
   });
 });

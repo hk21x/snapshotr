@@ -83,6 +83,7 @@ Snapshotr captures JPEG snapshots from RTSPS camera streams at configurable inte
 - **Snapshot Gallery** - Browse snapshots grouped by date with full-size lightbox, original-size viewer, keyboard navigation (arrow keys), download, and delete
 - **Configurable Capture** - Set interval (1-60 min) and JPEG quality (1-31) per camera
 - **Scheduling** - Restrict captures to specific days and time windows, including overnight ranges (e.g. 22:00-06:00)
+- **Auto-Resume** - Running captures automatically resume after a container restart or host reboot
 - **Notifications** - Failure alerts via Discord, Slack, or Telegram with built-in test buttons
 - **Retention Policy** - Auto-delete old snapshots by age or total disk usage
 - **Bulk Export** - Download all snapshots (or a single day) as a ZIP file

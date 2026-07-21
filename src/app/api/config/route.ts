@@ -69,6 +69,11 @@ export async function PUT(request: Request) {
     }
   }
 
+  // captureRunning is server-managed (auto-resume state) — never trust the
+  // client's copy, which may be stale.
+  const runningIds = captureManager.getRunningIds();
+  if (runningIds.length > 0) body.captureRunning = runningIds;
+  else delete body.captureRunning;
   saveConfig(body);
 
   // Restart capture if running to pick up new config

@@ -47,6 +47,9 @@ export interface CaptureConfig {
   schedule: ScheduleConfig;
   retention: RetentionConfig;
   cameras?: CameraConfig[];
+  // App-managed, not user-editable: capture ids currently running ("default"
+  // for the legacy single camera). Used to auto-resume after a restart.
+  captureRunning?: string[];
 }
 
 export interface CaptureStatus {
